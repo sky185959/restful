@@ -1,0 +1,519 @@
+<!--Start:导航条-->
+<nav class="navbar navbar-default" style="margin-bottom: 0px;" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" title="打开维基百科" href="http://zh.wikipedia.org/zh/REST" target="_blank" style="font-style: italic;margin: 0px;padding: 0px;"><img style="height: 20px;margin-top: 15px;" src="/images/logo2.png"/></a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" style="color: #428bca;" data-toggle="modal" data-target="#myModal1"><i class="fa fa-star"></i>&nbsp;关于本站</a></li>
+                <li><a href="#" style="color: #428bca;"  data-toggle="modal" data-target="#myModal2"><i class="fa fa-heart"></i>&nbsp;偏好设置</a></li>
+                <li><a href="#" style="color: #428bca;"  data-toggle="modal" data-target="#myModal3"><i class="fa fa-eye"></i>&nbsp;请求跟踪</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" style="color: #428bca;" data-toggle="dropdown"><i class="fa fa-info-circle"></i>&nbsp;使用帮助 <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#"  style="color: #428bca;" data-toggle="modal" data-target="#myModal4"><i class="fa fa-arrow-circle-o-up"></i>&nbsp;网站概览</a></li>
+                        <li><a href="#"  style="color: #428bca;"  data-toggle="modal" data-target="#myModal5"><i class="fa fa-arrow-circle-o-right"></i>&nbsp;四种请求</a></li>
+                        <li><a href="#"  style="color: #428bca;" data-toggle="modal" data-target="#myModal"><i class="fa fa-arrow-circle-o-down" ></i>&nbsp;Value选择</a></li>
+                        <li><a href="#"  style="color: #428bca;"  data-toggle="modal" data-target="#myModal6"><i class="fa fa-arrow-circle-o-left"></i>&nbsp;联系站长</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!--End:导航条-->
+
+<!--Start:通知区域-->
+<div class="container" style="height: 30px;">
+    <div class="row">
+        <div class="col-lg-12" style="text-align: center;">
+            <div ng-show="isShowIcon">
+                <i class="fa fa-spinner fa-spin fa-2x"></i>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-if="isShow">
+        <div class="col-lg-12">
+            <div ng-class="msgClass" style="text-align: center;margin-top: 2px;margin-bottom: 2px;padding-top: 2px;padding-bottom: 2px;"><span ng-bind="msg"></span></div>
+        </div>
+    </div>
+</div>
+<!--End:通知区域-->
+
+<!--Start:填写请求URL及发送请求-->
+<div class="container" style="margin-top: 10px;">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="input-group">
+                <input type="text" typeahead="url for url in tipsArr | filter:$viewValue | limitTo:10"  ng-model="url" placeholder="输入url后，按回车键发送请求" ng-keypress="submit($event, 1)" class="form-control">
+                <div class="input-group-btn">
+                    <button type="button" title="点我，也可以发送请求哦^_^" class="btn btn-default" tabindex="-1" ng-click="submit($event, 2)" style="color: #428bca;"><span ng-bind="method"></span></button>
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+                        <span class="caret"></span>
+                        <span class="sr-only">Request Method</span>
+                    </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li><a href="#" ng-click="method='GET'" style="color: #428bca;">GET</a></li>
+                        <li><a href="#" ng-click="method='POST'" style="color: #428bca;">POST</a></li>
+                        <li><a href="#" ng-click="method='PUT'" style="color: #428bca;">PUT</a></li>
+                        <li><a href="#" ng-click="method='DELETE'" style="color: #428bca;">DELETE</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End:填写请求URL及发送请求-->
+
+<!--Start:填写请求Body-->
+<div class="container">
+    <div class="row">
+        <!--<div class="col-lg-1"></div>-->
+        <div class="col-lg-12"  style="margin-top: 10px;">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title" style="">请求body
+                        <span class="pull-right">
+                            <i class="fa fa-plus" ng-click="addBody()" style="cursor: pointer; margin-right: 10px;">新增</i>
+                            <i class="fa fa-minus" ng-click="minusBody()" style="cursor: pointer;">减少</i>
+                        </span></h3>
+                </div>
+                <div class="panel-body">
+                    <div class="" style="height: 50px;">
+                        <div class="row" ng-repeat="obj in objs" style="margin-top: 3px; margin-bottom: 3px;">
+                            <div class="col-lg-6">
+                                <div class="input-group">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-primary" tabindex="-1" style="display: inline-block;width: 80px;">Key</button>
+                                    </div>
+                                    <input type="text" class="form-control" ng-model="obj.key">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="input-group">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-primary" title="打开帮助" tabindex="-1" data-toggle="modal" data-target="#myModal" style="display: inline-block;width: 80px;">Value</button>
+                                    </div>
+                                    <input type="text" class="form-control" ng-model="obj.value" >
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-default" tabindex="-1" style="display: inline-block;width: 80px;"><span id="type{{$index}}" style="color: #428bca;">String</span></button>
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu pull-right" role="menu">
+                                            <li><a href="#" ng-click="chooseType($index, 'String')" style="color: #428bca;">String</a></li>
+                                            <li><a href="#" ng-click="chooseType($index, 'Object')" style="color: #428bca;">Object</a></li>
+                                            <li><a href="#" ng-click="chooseType($index, 'Array')" style="color: #428bca;">Array</a></li>
+                                            <li><a href="#" ng-click="chooseType($index, 'Number')" style="color: #428bca;">Number</a></li>
+                                            <li><a href="#" ng-click="chooseType($index, 'Boolean')" style="color: #428bca;">Boolean</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End:填写请求Body-->
+
+<!--Start:只显示response 和request详情-->
+<div ng-hide="showBody" class="container" style="margin-top: 10px;">
+    <div class="row" style="">
+        <!--<div class="col-lg-1" ></div>-->
+        <div class="col-lg-6" >
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">request 详情</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="well well-sm" style="height: 500px; overflow: auto">
+                        <div class="row" ng-repeat="obj in req" style="margin-top: 3px; margin-bottom: 3px;">
+                            <div ng-repeat="(key, value) in obj">
+                                <div class="col-lg-4"><span ng-bind="key"></span></div>
+                                <div class="col-lg-8"><span ng-bind="value"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="col-lg-2"></div>-->
+        <div class="col-lg-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">response 详情</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="well well-sm" style="height: 500px; overflow: auto">
+                        <div class="row" ng-repeat="obj in res" style="margin-top: 3px; margin-bottom: 3px;">
+                            <div ng-repeat="(key, value) in obj">
+                                <div class="col-lg-4"><span ng-bind="key"></span>
+                                    <span ng-if="key=='Body'" ng-click="showAllRes()" title="查看body详情" style="cursor: pointer;color: #428bca;"><i class="fa  fa-arrows-alt"></i></span>
+                                </div>
+
+                                <div class="col-lg-8" ng-if="key!='Body'"><span ng-bind="value"></span></div>
+                                <div class="col-lg-8" ng-if="key=='Body'">
+                                    <textarea id="res" style="background-color: #f5f5f5;height:500px; width: 100%;" ng-model="bodyValue">
+                                    </textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="col-lg-1"></div>-->
+    </div>
+</div>
+<!--End:只显示response 和request详情-->
+
+<!--Start:只显示response body详情-->
+<div class="container" ng-show="showBody">
+    <div class="row" style="">
+        <div class="col-lg-12" >
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title" style="text-align: center;display: inline-block">Response body详情<span style="color: #eea236;" ng-bind="bodyLength"></span></h3>
+                    <span class="pull-right">
+                        <div class="btn-group">
+                            <button id="btnGroupVerticalDrop1" title="语法高亮" style="padding: 0px; margin: 0px;background-color: transparent;border: 0px;margin-right: 15px;" type="button"  data-toggle="dropdown">
+                                <i class="fa  fa-sun-o"></i>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="btnGroupVerticalDrop1">
+                                <li><a href="" ng-click="hl('json')" title="高亮Json文件" style="cursor: pointer;margin-right: 15px;color: #428bca;">Json</a></li>
+                                <li><a href="" ng-click="hl('js')" title="高亮Javascript文件" style="cursor: pointer;margin-right: 15px;color: #428bca;">Js</a></li>
+                                <li><a href="" ng-click="hl('html')" title="高亮Html文件" style="cursor: pointer;margin-right: 15px;color: #428bca;">Html</a></li>
+                                <li><a href="" ng-click="hl('css')" title="高亮Css文件" style="cursor: pointer;margin-right: 15px;color: #428bca;">Css</a></li>
+                            </ul>
+                        </div>
+                            <span ng-click="formate()" title="格式化" style="cursor: pointer;margin-right: 15px;"><i class="fa  fa-rotate-left"></i></span>
+                            <span ng-click="showBody=false" title="返回" style="cursor: pointer;margin-right: 15px;"><i class="fa  fa-arrows-alt"></i></span>
+                            <span ng-click="open()" title="复制" style="cursor: pointer;"><i class="fa fa-files-o"></i></span>
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <div class="well well-sm" style="height: 500px; overflow: auto">
+                        <div class="row">
+                            <pre><span ng-bind="bodyValue" ng-class="codeClass"></span>
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End:只显示response body详情-->
+
+<!--Start:Value填写注意事项-->
+<div class="container">
+    <div class="row">
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" style="color: #a94442;" id="myModalLabel">Value填写注意事项</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h3>概述：</h3>
+                        <p>在发送POST和PUT时，body是以key、value的对象形式发送的例如<kbd>｛"username":"tsq","password":"88888"}</kbd>
+                            其中<kbd>’username'和'password'</kbd>是key;<kbd>'tsq'和'888888‘</kbd>是value<br/>
+                            value共支持5种类型：分别是：字符串，布尔值，数值，对象，数组</p>
+                        <h3>字符串(String)：</h3>
+                        <p>直接在输入框中填写字符串，无需加引号如：<kbd>tom</kbd></p>
+                        <h3>布尔值(Boolean)：</h3>
+                        <p>直能填写<kbd>true</kbd>或<kbd>false</kbd></p>
+                        <h3>数值(Number)：</h3>
+                        <p>直能填写数字如：<kbd>222.22</kbd></p>
+                        <h3>对象(Object)：</h3>
+                        <p>以大括号包围，严格遵守json格式(双引号包围key和是string的value)如:<kbd>{"name":"tom"}</kbd></p>
+                        <h3>数组(Array)：</h3>
+                        <p>以中括号包围，严格遵守json格式如:<kbd>[1,2,3]</kbd>、<kbd>[{"age":11}]</kbd></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End:Value填写注意事项-->
+
+<!--Start: modal for 关于本站-->
+<div class="container">
+    <div class="row">
+        <!-- Modal -->
+        <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" style="color: #00A2E9;" id="myModalLabel">关于本站</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p style="line-height: 35px;">
+                            如今Web开发貌似偏向于Restful风格的请求，而本站则提供一个平台用于快速发送Restful风格的请求。
+                            即Http请求的Method分别可为：GET,POST,PUT,DELETE。<br/>
+                            建站的原因也是因为平时自己需要经常发送各种Http请求做一些测试性的工作(^_^插一句我的<a href="http://218.244.151.201" target="_blank">361搜索</a> 就是建立在这个基础之上的)。而脱离了实际的开发程序，想单独发送一些Http请求却十分的麻烦，特别是POST、PUT、DELETE请求。
+                            其中自己也使用过一些工具，如：命令行工具Curl、NodeJS中的Request模块、甚至是自己用Angular写一个Service。<br/>
+                            不过，总觉得这些方法操作起来不够简便、直观。想到自己阿里云上还有台花了50块钱买的Linux主机！不如在那上面架设一台用于发送
+                            Restful请求的Web服务器，说做就做。几天后，网站诞生了。如果您也需要经常发送各类Http请求做一些测试，这个网站还是会给您带来一些帮助的!
+                        </p>
+                        <p style="text-align: right;color: #00A2E9;"><a href="http://about.me/tangshiqiang" target="_blank">tangshiqiang</a>:于2014-4-26</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End: modal for 关于本站-->
+
+<!--Start: modal for 偏好设置-->
+<div class="container">
+    <div class="row">
+        <!-- Modal -->
+        <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" style="color: #00A2E9;" id="myModalLabel">偏好设置</h4>
+                    </div>
+                    <div class="modal-body">
+                        <label class="control-label valtype" data-valtype="label" style="font-size: 18px;color: #3c763d">默认Method</label>
+                        <div class="controls valtype" data-valtype="inline-radios">
+                            <!-- Inline Radios -->
+                            <label class="radio inline" style="color: #3c763d">
+                                <input type="radio" value="GET"  name="group" ng-model="localMethod.method">
+                                GET
+                            </label>
+                            <label class="radio inline" style="color: #3c763d">
+                                <input type="radio" value="POST" name="group" ng-model="localMethod.method">
+                                POST
+                            </label>
+                            <label class="radio inline" style="color: #3c763d">
+                                <input type="radio" value="PUT" name="group"  ng-model="localMethod.method">
+                                PUT
+                            </label>
+                            <label class="radio inline" style="color: #3c763d">
+                                <input type="radio" value="DELETE" name="group"  ng-model="localMethod.method">
+                                DELETE
+                            </label>
+                        </div>
+                        <label class="control-label valtype" data-valtype="label" style="font-size: 18px;color: #3c763d">响应关注点</label>
+                        <div class="controls valtype" data-valtype="inline-radios">
+                            <!-- Inline Radios -->
+                            <label class="radio inline" style="color: #3c763d">
+                                <input type="radio" value="true"  name="group1" ng-model="localBodyProfile.isShow">
+                                响应的Body详情
+                            </label>
+                            <label class="radio inline" style="color: #3c763d">
+                                <input type="radio" value="false"  ng-model="localBodyProfile.isShow" name="group1">
+                                请求与响应的概览
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End: modal for 偏好设置-->
+
+<!--Start: modal for 请求跟踪-->
+<div class="container">
+    <div class="row">
+        <!-- Modal -->
+        <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" style="color: #00A2E9;" id="myModalLabel">请求跟踪-显示当前请求基本信息<span ng-hide="trackObj" style="color: #d2322d;">-尚未发送过任何请求！</span></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-2" style="font-size: 15px;color: #3c763d">请求URL</div>
+                            <div class="col-lg-10">
+                                <pre>{{trackObj.url}}</pre>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2" style="font-size: 15px;color: #3c763d">请求方法</div>
+                            <div class="col-lg-10">
+                                <pre>{{trackObj.method}}</pre>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2" style="font-size: 15px;color: #3c763d">请求Body</div>
+                            <div class="col-lg-10">
+                                <pre>{{trackObj.body|json}}</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End: modal for 请求跟踪-->
+
+<!--Start: modal for 网站概览-->
+<div class="container">
+    <div class="row">
+        <!-- Modal -->
+        <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" style="color: #00A2E9;" id="myModalLabel"> 网站概览</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="bs-example bs-example-tabs">
+                            <ul id="myTab" class="nav nav-tabs">
+                                <li class="active"><a href="#home" data-toggle="tab">功能区说明</a></li>
+                                <li class=""><a href="#profile" data-toggle="tab">查看Response Body</a></li>
+
+                            </ul>
+                            <div id="myTabContent" class="tab-content">
+                                <div class="tab-pane fade  active in" id="home">
+                                    <p style="line-height: 35px;">功能区说明，想了半天都不知到怎么去写，最后没办法，干脆就用图片来代替吧。<a href="/images/help1.png" target="_blank">点我</a>打开图片说明</p>
+                                </div>
+                                <div class="tab-pane fade" id="profile">
+                                    <p style="line-height: 35px;">系统默认情况下会将response body做为一个子项目放在‘response 详情中‘<a href="/images/help2.png" target="_blank">(点击查看案例)</a> ，但如果您更关注的是response的body，您可以按如下操作：点击工具栏上的偏好设置->响应关注点->响应的Body详情
+                                        此后如果您再次发送请求，界面将是<a href="/images/help3.png" target="_blank">这样。</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End: modal for 网站概览-->
+
+<!--Start: modal for 四种请求-->
+<div class="container">
+    <div class="row">
+        <!-- Modal -->
+        <div class="modal fade" id="myModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" style="color: #00A2E9;" id="myModalLabel">四种请求</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="bs-example bs-example-tabs">
+                            <ul id="myTab" class="nav nav-tabs">
+                                <li class="active"><a href="#get" data-toggle="tab">GET</a></li>
+                                <li class=""><a href="#post" data-toggle="tab">POST</a></li>
+                                <li class=""><a href="#put" data-toggle="tab">PUT</a></li>
+                                <li class=""><a href="#delete" data-toggle="tab">DELETE</a></li>
+                            </ul>
+                            <div id="myTabContent" class="tab-content">
+                                <div class="tab-pane fade  active in" id="get">
+                                    <p style="line-height: 35px;">
+                                        请求body原本只能作用于POST和PUT方法，但是考虑到GET方法的query string经常用到key/value的形式
+                                        所以就做了一下改动，当发送GET方法时，在'请求body'区域填写的key/value同样有效，其规则是：<br/>
+                                        你所填写的key/value将会以<kbd> ?key=value</kbd>形式附加在请求url后面例如：<br/>
+                                        请求url，您填的是:<kbd>http://www.baidu.com</kbd><br/>
+                                        请求body中填写两组key/value: 一组是<kbd>name/tom</kbd>,一组是<kbd>age/25</kbd><br/>
+                                        则最后发送的GET请求的url为:<kbd>http://www.baidu.com?name=tom&age=25</kbd><br/>
+                                        <span style="color:#d2322d;">所有请求发送的细节您都可以点击菜单栏上的'请求跟踪’查看。</span>
+                                    </p>
+                                </div>
+                                <div class="tab-pane fade" id="post">
+                                    <p style="line-height: 35px;">
+                                        '请求body'区域填写的key/value将作为post请求的body发送到你所填写url对应的服务器。<br/>
+                                        value支持5种类型，默认是String。具体详情，请点击'使用帮助’中‘Value选择‘。<br/>
+                                        <span style="color:#d2322d;">所有请求发送的细节您都可以点击菜单栏上的'请求跟踪’查看。</span>
+                                    </p>
+                                </div>
+                                <div class="tab-pane fade" id="put">
+                                    <p style="line-height: 35px;">
+                                        '请求body'区域填写的key/value将作为put请求的body发送到你所填写url对应的服务器。<br/>
+                                        value支持5种类型，默认是String。具体详情，请点击'使用帮助’中‘Value选择‘。<br/>
+                                        <span style="color:#d2322d;">所有请求发送的细节您都可以点击菜单栏上的'请求跟踪’查看。</span>
+                                    </p>
+                                </div>
+                                <div class="tab-pane fade" id="delete">
+                                    <p style="line-height: 35px;">
+                                        注意：<span style="color:#d2322d;">此时'请求body'中填写的任何内容都是无效的，他们不会作为请求body发送到服务端</span><br/>
+                                        在restful中常用是在url后加上一个id来删除一个对象，所以利用delete请求可以快速删除一个对象，例如：
+                                        <br/>
+                                        你填写的url为：<kbd>http://localhost:1337/book/a239eiae9nihhd</kbd><br/>
+                                        delete请求将帮助你删除id为a239eiae9nihhd的book<br/>
+                                        <span style="color:#d2322d;">所有请求发送的细节您都可以点击菜单栏上的'请求跟踪’查看。</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End: modal for四种请求-->
+
+<!--Start: modal for  联系站长-->
+<div class="container">
+    <div class="row">
+        <!-- Modal -->
+        <div class="modal fade" id="myModal6" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" style="color: #00A2E9;" id="myModalLabel"> 联系站长-邮箱</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-8" style="line-height: 30px;font-size: 18px;color: #428bca;text-align: center;">
+                            tangshiqiangcn@gmail.com
+                            </div>
+                            <div class="col-lg-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End: modal for 联系站长-->
+
+<!--Start: modal for 复制Body-->
+<script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+        <h3 style="text-align: center; color: #428bca;">Ctrl+A手动复制吧!</h3>
+    </div>
+    <div class="modal-body">
+        <textarea style="height: 400px; width: 560px;" ng-model="modalBody"></textarea>
+    </div>
+</script>
+<!--End: modal for 复制Body-->

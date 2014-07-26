@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="restful">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title>Restful</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link href="/styles/bootstrap.min.css" rel="stylesheet">
+    <link href="/styles/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/themes/pace-theme-minimal.css">
+    <link rel="stylesheet" href="/styles/hjs.css">
+
+</head>
+<body ng-controller="RestfulCtrl" ng-init="initLocal()">
+<%- body %>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script src="/js/pace.js"></script>
+<script type="text/javascript" src="/js/angular.min.js"></script>
+<script type="text/javascript" src="/js/angular-resource.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap-min.js"></script>
+<script type="text/javascript" src="/js/ui-bootstrap-tpls.min.js"></script>
+<script type="text/javascript" src="/js/local.js"></script>
+<script type="text/javascript" src="/js/angular/core/app.js"></script>
+<script type="text/javascript" src="/js/angular/controllers/restful.js"></script>
+<script type="text/javascript" src="/js/angular/services/restful.js"></script>
+<script src="/js/hjs.js"></script>
+<script>
+    $(document).ready(function() {
+        $('pre span').each(function(i, e) {hljs.highlightBlock(e)});
+    });
+</script>
+</body>
+</html>
