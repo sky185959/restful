@@ -8,7 +8,4 @@ var app = angular.module('restful',[
     'ngResource',
     'LocalStorageModule'
 ]);
-window.restful = {
-//    baseURL: "http://localhost:1337/"
-    baseURL: "http://218.244.151.201:1337/"
-};
+
